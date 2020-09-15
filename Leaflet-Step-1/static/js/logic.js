@@ -10,7 +10,7 @@ function createMap(earthquakes) {
   
     // Create a baseMaps object to hold the lightmap layer
     var baseMaps = {
-      // "Lights Map": lightmap
+      "Lights Map": lightmap
     };
   
     // Create an overlayMaps object to hold the earthquake layer
@@ -27,8 +27,13 @@ function createMap(earthquakes) {
   
     // Create a layer control, pass in the baseMaps and overlayMaps. Add the layer control to the map
     L.control.layers(baseMaps, overlayMaps, {
-      collapsed: false
+      collapsed: false,
+      position: 'bottomright'
     }).addTo(map);
+
+    // var legend = L.control({ position: 'bottomright'});
+
+   
   }
   
   // Adjust the marker size in relation to the madnitude of the earthquake
