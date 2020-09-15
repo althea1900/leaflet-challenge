@@ -10,7 +10,7 @@ function createMap(earthquakes) {
   
     // Create a baseMaps object to hold the lightmap layer
     var baseMaps = {
-      "Light Map": lightmap
+      // "Lights Map": lightmap
     };
   
     // Create an overlayMaps object to hold the earthquake layer
@@ -31,10 +31,12 @@ function createMap(earthquakes) {
     }).addTo(map);
   }
   
+  // Adjust the marker size in relation to the madnitude of the earthquake
   function markerSize(magnitude) {
     return magnitude * 5;
   }
-
+  
+  // Adjust the marker color in relation to the madnitude of the earthquake
   function markerColor(magnitude) {
     switch(true){
       case (magnitude<1):
