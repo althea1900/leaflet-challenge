@@ -44,7 +44,7 @@ function createMap(earthquakes) {
       var feature = features[index];
   
       // For each quake, create a marker and bind a popup with the quake's name
-      var quakeMarker = L.marker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]])
+      var quakeMarker = L.circleMarker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]])
         .bindPopup("<h3>" + feature.properties.place + "<h3><h3>Magnitude: " + feature.properties.mag + "</h3>");
   
       // Add the marker to the bikeMarkers array
