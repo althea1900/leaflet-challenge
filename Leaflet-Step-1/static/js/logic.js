@@ -3,7 +3,7 @@ function createMap(earthquakes) {
     // Create the tile layer that will be the background of our map
     var lightmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
       attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-      maxZoom: 18,
+      maxZoom: 30,
       id: "light-v10",
       accessToken: API_KEY
     });
@@ -44,7 +44,7 @@ function createMap(earthquakes) {
       var feature = features[index];
   
       // For each quake, create a marker and bind a popup with the quake's name
-      var quakeMarker = L.marker([feature.geometry.coordinates[0], feature.geometry.coordinates[1]])
+      var quakeMarker = L.marker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]])
         .bindPopup("<h3>" + feature.properties.place + "<h3><h3>Magnitude: " + feature.properties.mag + "</h3>");
   
       // Add the marker to the bikeMarkers array
