@@ -33,18 +33,18 @@ function createMap(earthquakes) {
   
   function createMarkers(response) {
   
-    // Pull the "feature" property off of response.data
+    // Pull the "features" property off of response.data
     var features = response.features;
   
-    // Initialize an array to hold bike markers
+    // Initialize an array to hold quake markers
     var quakeMarkers = [];
   
-    // Loop through the feature array
+    // Loop through the features array
     for (var index = 0; index < features.length; index++) {
       var feature = features[index];
   
       // For each quake, create a marker and bind a popup with the quake's name
-      var quakeMarker = L.marker([feature.properties])
+      var quakeMarker = L.marker([feature.geometry.coordinates[0], feature.geometry.coordinates[1]])
         .bindPopup("<h3>" + feature.properties.place + "<h3><h3>Magnitude: " + feature.properties.mag + "</h3>");
   
       // Add the marker to the bikeMarkers array
