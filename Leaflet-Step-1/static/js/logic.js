@@ -20,8 +20,8 @@ function createMap(earthquakes) {
   
     // Create the map object with options
     var map = L.map("map", {
-      center: [31.57853542647338,-99.580078125],
-      zoom: 12,
+      center: [37.0902405,-95.7128906],
+      zoom: 4,
       layers: [lightmap, earthquakes]
     });
   
@@ -40,15 +40,15 @@ function createMap(earthquakes) {
     var quakeMarkers = [];
   
     // Loop through the feature array
-    for (var index = 0; index < features.properties; index++) {
+    for (var index = 0; index < features.length; index++) {
       var feature = features[index];
   
       // For each quake, create a marker and bind a popup with the quake's name
-      var quakeMarkers = L.marker([feature.lat, feature.lon])
-        .bindPopup("<h3>" + feature.title + "<h3><h3>Magnitude: " + feature.mag + "</h3>");
+      var quakeMarker = L.marker([feature.properties])
+        .bindPopup("<h3>" + feature.properties.place + "<h3><h3>Magnitude: " + feature.properties.mag + "</h3>");
   
       // Add the marker to the bikeMarkers array
-      quakeMarkers.push(quakeMarkers);
+      quakeMarkers.push(quakeMarker);
     }
   
     // Create a layer group made from the bike markers array, pass it into the createMap function
@@ -57,5 +57,5 @@ function createMap(earthquakes) {
   
   
   // Perform an API call to the Citi Bike API to get station information. Call createMarkers when complete
-  d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_week.geojson", createMarkers);
-  
+  // d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_week.geojson", createMarkers);
+  d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson", createMarkers);
