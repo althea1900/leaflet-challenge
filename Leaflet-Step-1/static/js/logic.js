@@ -33,11 +33,21 @@ function createMap(earthquakes) {
 
     var legend = L.control({ position: 'bottomright' });
 
-    legend.onAdd = function(map) {
-      var div = L.DomUtil.create('div', 'info legend'),
-            magnitude = [0, 1, 2, 3, 4, 5],
-            labels = [];
-    }
+    // function markerLegend(magnitude) {
+    //   switch(true){
+    //     case (magnitude<1):
+    //         return "green";
+    //     case (magnitude<2):
+    //         return "greenyellow";
+    //     case (magnitude<3):
+    //         return "yellow";
+    //     case (magnitude<4):
+    //         return "orange";
+    //     case (magnitude<5):
+    //         return "darkorange";
+    //     default:
+    //         return "red";
+    // };
 
    
   }
@@ -63,7 +73,7 @@ function createMap(earthquakes) {
       default:
           return "red";
   };
-  }
+}
 
   function createMarkers(response) {
   
