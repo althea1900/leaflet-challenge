@@ -10,7 +10,7 @@ function createMap(earthquakes) {
   
     // Create a baseMaps object to hold the lightmap layer
     var baseMaps = {
-      "Lights Map": lightmap
+      // "Lights Map": lightmap
     };
   
     // Create an overlayMaps object to hold the earthquake layer
@@ -31,7 +31,13 @@ function createMap(earthquakes) {
       position: 'bottomright'
     }).addTo(map);
 
-    // var legend = L.control({ position: 'bottomright'});
+    var legend = L.control({ position: 'bottomright' });
+
+    legend.onAdd = function(map) {
+      var div = L.DomUtil.create('div', 'info legend'),
+            magnitude = [0, 1, 2, 3, 4, 5],
+            labels = [];
+    }
 
    
   }
