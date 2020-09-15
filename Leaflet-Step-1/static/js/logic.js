@@ -31,6 +31,27 @@ function createMap(earthquakes) {
     }).addTo(map);
   }
   
+  function markerSize(magnitude) {
+    return magnitude * 5;
+  }
+
+  function markerColor(magnitude) {
+    switch(true){
+      case (magnitude<1):
+          return "green";
+      case (magnitude<2):
+          return "greenyellow";
+      case (magnitude<3):
+          return "yellow";
+      case (magnitude<4):
+          return "orange";
+      case (magnitude<5):
+          return "darkorange";
+      default:
+          return "red";
+  };
+  }
+
   function createMarkers(response) {
   
     // Pull the "features" property off of response.data
@@ -44,7 +65,15 @@ function createMap(earthquakes) {
       var feature = features[index];
   
       // For each quake, create a marker and bind a popup with the quake's name
-      var quakeMarker = L.circleMarker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]])
+      var quakeMarker =  L.circleMarker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], {
+          // radius: feature.properties.mag*5,
+          radius: markerSize(feature.properties.mag),
+          fillColor: markerColor(feature.properties.mag),
+          color: "black",
+          weight: 1,
+          opacity: 1,
+          fillOpacity: 0.6,
+        })
         .bindPopup("<h3>" + feature.properties.place + "<h3><h3>Magnitude: " + feature.properties.mag + "</h3>");
   
       // Add the marker to the bikeMarkers array
