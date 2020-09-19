@@ -1,3 +1,6 @@
+// Store our API endpoint inside queryUrl
+var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
+
 function createMap(earthquakes) {
 
     // Create the tile layer that will be the background of our map
@@ -20,7 +23,8 @@ function createMap(earthquakes) {
   
     // Create the map object with options
     var map = L.map("map", {
-      center: [37.0902405,-95.7128906],
+      // center: [37.0902405,-95.7128906],
+      center: [31.57853542647338,-99.580078125],
       zoom: 4,
       layers: [lightmap, earthquakes]
     });
@@ -28,34 +32,22 @@ function createMap(earthquakes) {
     // Create a layer control, pass in the baseMaps and overlayMaps. Add the layer control to the map
     L.control.layers(baseMaps, overlayMaps, {
       collapsed: false,
-      position: 'bottomright'
+      // position: 'bottomright'
     }).addTo(map);
 
-    var legend = L.control({ position: 'bottomright' });
+    var info = L.control({ position: 'bottomright' });
+ 
+    info.onAdd = function(){
+      var div = L.DomUtil.create('div', 'legend');
+      return div;
+    }
+     
+// };
 
-    // function markerLegend(magnitude) {
-    //   switch(true){
-    //     case (magnitude<1):
-    //         return "green";
-    //     case (magnitude<2):
-    //         return "greenyellow";
-    //     case (magnitude<3):
-    //         return "yellow";
-    //     case (magnitude<4):
-    //         return "orange";
-    //     case (magnitude<5):
-    //         return "darkorange";
-    //     default:
-    //         return "red";
-    // };
+info.addTo(map);
+document.querySelector(".legend").innerHTML=theLedgend();
 
-   
-  }
-  
-  // Adjust the marker size in relation to the madnitude of the earthquake
-  function markerSize(magnitude) {
-    return magnitude * 5;
-  }
+  };
   
   // Adjust the marker color in relation to the madnitude of the earthquake
   function markerColor(magnitude) {
@@ -75,6 +67,39 @@ function createMap(earthquakes) {
   };
 }
 
+  // to build the ledgend
+  function theLedgend() {
+    ledgendDict = [{
+      color: "green", 
+      mag: "0-1"
+    },{
+      color: "greenyellow", 
+      mag: "1-2"
+    },{
+      color: "yellow", 
+      mag: "2-3"
+    },{
+      color: "orange", 
+      mag: "3-4"
+    },{
+      color: "darkorange", 
+      mag: "4-5"
+    },{
+      color: "red", 
+      mag: "5+"
+    }];
+
+    buildLedgend = "";
+
+    for (i = 0; i < ledgendDict.length; i++){
+      buildLedgend += "<p style = \"background-color: "+ledgendDict[i].color+"\">"+ledgendDict[i].mag+"</p> ";
+  }
+  
+  return buildLedgend;
+
+}
+
+
   function createMarkers(response) {
   
     // Pull the "features" property off of response.data
@@ -89,8 +114,7 @@ function createMap(earthquakes) {
   
       // For each quake, create a marker and bind a popup with the quake's name
       var quakeMarker =  L.circleMarker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], {
-          // radius: feature.properties.mag*5,
-          radius: markerSize(feature.properties.mag),
+          radius: feature.properties.mag*5,
           fillColor: markerColor(feature.properties.mag),
           color: "black",
           weight: 1,
@@ -109,5 +133,11 @@ function createMap(earthquakes) {
   
   
   // Perform an API call to the Citi Bike API to get station information. Call createMarkers when complete
-  d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_week.geojson", createMarkers);
+  // d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_week.geojson", createMarkers);
   // d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson", createMarkers);
+
+  // Perform a GET request to the query URL
+d3.json(queryUrl, function(data) {
+  // Once we get a response, send the data.features object to the createFeatures function
+  createMarkers(data);
+});
