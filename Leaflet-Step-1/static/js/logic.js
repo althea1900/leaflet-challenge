@@ -94,7 +94,7 @@ document.querySelector(".legend").innerHTML=theLedgend();
 
     for (i = 0; i < ledgendDict.length; i++){
       buildLedgend += "<p style = \"background-color: "+ledgendDict[i].color+"\">"+ledgendDict[i].mag+"</p> ";
-  }
+    }
   
   return header+buildLedgend;
 
